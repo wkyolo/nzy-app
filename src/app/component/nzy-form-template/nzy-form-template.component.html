@@ -1,0 +1,78 @@
+<div class="container">
+  <h2 style="text-align: center">入市批文信息</h2>
+  <form #nzyForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="xmmc">项目名称</label>
+      <input type="text" class="form-control" id="xmmc" required [(ngModel)]="pwinfo.xmmc" name="xmmc" #xmmc="ngModel">
+      <div [hidden]="xmmc.valid || xmmc.pristine" class="alert alert-danger">
+        输入项目名称
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-xs-6">
+        <label for="xmlx">项目类型</label>
+        <select class="form-control" id="xmlx" required [(ngModel)]="pwinfo.xmlx" name="xmlx">
+          <option *ngFor="let lx of xmlx" [value]="lx">{{lx}}</option>
+        </select>
+      </div>
+      <div class="form-group col-xs-6">
+        <label for="pzdw">批准单位</label>
+        <select class="form-control" id="pzdw" required [(ngModel)]="pwinfo.pzdw" name="pzdw">
+          <option *ngFor="let dw of pzdw" [value]="dw">{{dw}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pfwh">批复文号</label>
+      <input type="text" class="form-control" id="pfwh" [(ngModel)]="pwinfo.pfwh" name="pfwh" placeholder="XXXX[2018]号">
+    </div>
+
+    <div class="form-group">
+      <label for="pzrq">批准日期</label>
+      <input type="date" class="form-control" id="pzrq" [(ngModel)]="pwinfo.pzrq" name="pzrq">
+    </div>
+
+    <div class="form-group">
+      <label for="zmj">总面积(公顷)</label>
+      <input type="text" pattern="[0-9]*.[0-9]*" class="form-control" id="zmj" [(ngModel)]="pwinfo.zmj" name="zmj" #zmj="ngModel">
+      <div [hidden]="zmj.valid || zmj.pristine" class="alert alert-danger">
+        输入范围0-9999
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <label for="zdmc">宗地名称</label>
+        <input type="text" class="form-control" id="zdmc" [(ngModel)]="zdinfo.zdmc" name="zdmc" #zdmc="ngModel">
+      </div>
+      <div class="col-xs-5">
+        <label for="zdmj">宗地面积</label>
+        <input type="text" pattern="[0-9]*.[0-9]*" class="form-control" id="zdmj" [(ngModel)]="zdinfo.zdmj" name="zdmj" #zdmj="ngModel">
+      </div>
+      <div class="col-xs-1">
+        <label for="add">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </label>
+        <span class="glyphicon glyphicon-minus" aria-hidden="true" style="float: right;"></span>
+        <button id="add" class="btn btn-default btn-block">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <button type="submit" class="btn btn-success" [disabled]="!nzyForm.form.valid" (click)="newPwinfo(); nzyForm.reset()">保存</button>
+      </div>
+      <div class="col-xs-6">
+        <button style="float:right;" type="button" class="btn btn-success" (click)="nzyForm.reset()">重置</button>
+      </div>
+    </div>
+  </form>
+  <hr>
+  <p style="color: red">城市用地：2007年以后 84个重点城市规划建设区内，国务院批复的城镇用地。请84个重点城市注意。</p>
+</div>

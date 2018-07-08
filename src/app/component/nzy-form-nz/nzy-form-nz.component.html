@@ -1,0 +1,106 @@
+<div class="container">
+  <h2 style="text-align: center">入市批文信息</h2>
+  <form nz-form [formGroup]="nzyForm" (ngSubmit)="onSubmit()">
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSpan]="2">项目名称</nz-form-label>
+      <nz-form-control [nzSpan]="22" nzHasFeedback>
+        <input nz-input type="text" formControlName="xmmc" placeholder="输入项目名称">
+        <nz-form-explain *ngIf="nzyForm.get('xmmc').dirty && nzyForm.get('xmmc').errors">请输入项目名称</nz-form-explain>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSpan]="2">项目类型</nz-form-label>
+      <nz-form-control [nzSpan]="10">
+        <nz-select formControlName="xmlx" nzPlaceHolder="请选择项目类型" nzAllowClear>
+          <nz-option *ngFor="let lx of xmlxdict" [nzLabel]="lx" [nzValue]="lx"></nz-option>
+        </nz-select>
+      </nz-form-control>
+      <nz-form-label nzRequired [nzSpan]="2">批准单位</nz-form-label>
+      <nz-form-control [nzSpan]="10">
+        <nz-select formControlName="pzdw" nzPlaceHolder="请选择批准单位" nzAllowClear>
+          <nz-option nzLabel="国务院" nzValue="GWY"></nz-option>
+          <nz-option nzLabel="省级人民政府" nzValue="SZF"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">批复文号</nz-form-label>
+      <nz-form-control [nzSpan]="22">
+        <input nz-input type="text" formControlName="pfwh" placeholder="XXXX[2018]号">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">批准日期</nz-form-label>
+      <nz-form-control [nzSpan]="22">
+        <nz-date-picker style="width: 100%" formControlName="pzrq"></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="2">总面积(公顷)</nz-form-label>
+      <nz-form-control [nzSpan]="22">
+        <nz-input-number style="width: 100%" [nzMin]=0 [nzMax]=99 [nzStep]=0.1 formControlName="zmj" [nzPlaceHolder]="'请输入总面积'"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+
+    <div formArrayName="zdExist">
+      <nz-form-item *ngFor="let zde of zdExist.controls; let i=index" [formGroupName]="i">
+        <nz-form-label [nzSpan]="2">宗地名称</nz-form-label>
+        <nz-form-control [nzSpan]="10">
+          <input nz-input type="text" formControlName="zdmc" placeholder="请输入宗地名称">
+        </nz-form-control>
+        <nz-form-label [nzSpan]="2">宗地面积</nz-form-label>
+        <nz-form-control [nzSpan]="8">
+          <nz-input-number style="width: 100%" [nzMin]=0 [nzMax]=99 [nzStep]=0.1 formControlName="zdmj" [nzPlaceHolder]="'请输入宗地面积'"></nz-input-number>
+        </nz-form-control>
+        <nz-form-control [nzSpan]="2">
+          <button style="width: 100%;" nz-button nzType="default" (click)="addField()">
+            <i class="anticon anticon-plus"></i>
+          </button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div formArrayName="zdAdd">
+      <nz-spin [nzSpinning]="isLoading">
+        <nz-form-item *ngFor="let zda of zdAdd.controls; let i=index" [formGroupName]="i">
+          <nz-form-label [nzSpan]="2">宗地名称</nz-form-label>
+          <nz-form-control [nzSpan]="10">
+            <input nz-input type="text" formControlName="zdmc" placeholder="请输入宗地名称">
+          </nz-form-control>
+          <nz-form-label [nzSpan]="2">宗地面积</nz-form-label>
+          <nz-form-control [nzSpan]="8">
+            <nz-input-number style="width: 100%" [nzMin]=0 [nzMax]=99 [nzStep]=0.1 formControlName="zdmj" [nzPlaceHolder]="'请输入宗地面积'"></nz-input-number>
+          </nz-form-control>
+          <nz-form-control [nzSpan]="2">
+            <button style="width: 100%;" nz-button nzType="default" (click)="delField(i)">
+              <i class="anticon anticon-minus"></i>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-spin>
+    </div>
+
+    <nz-divider nzDashed></nz-divider>
+
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <button type="submit" nz-button nzType="primary" (click)="onSubmit()">保存</button>
+      </div>
+      <div nz-col ngSpan="12">
+        <button style="float:right;" type="button" nz-button nzType="primary" (click)="nzyForm.reset()">重置</button>
+      </div>
+    </div>
+
+    <!-- <nz-form-item>
+        <nz-form-label nzRequired [nzSpan]="4">批准单位</nz-form-label>
+        <nz-form-control [nzSpan]="20">
+          <nz-radio-group>
+            <label nz-radio nzValue="GWY" formControlName="pzdw">国务院</label>
+            <label nz-radio nzValue="SZF" formControlName="pzdw">省级人民政府</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item> -->
+  </form>
+  <hr>
+  <p style="color: red">城市用地：2007年以后 84个重点城市规划建设区内，国务院批复的城镇用地。请84个重点城市注意。</p>
+</div>

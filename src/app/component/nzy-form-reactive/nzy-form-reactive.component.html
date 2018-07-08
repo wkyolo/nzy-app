@@ -1,0 +1,108 @@
+<div class="container">
+  <h2 style="text-align: center">入市批文信息</h2>
+  <form [formGroup]="nzyForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="xmmc">项目名称</label>
+      <input type="text" class="form-control" id="xmmc" formControlName="xmmc">
+    </div>
+
+    <div class="row">
+      <div class="form-group col-xs-6">
+        <label for="xmlx">项目类型</label>
+        <select class="form-control" id="xmlx" formControlName="xmlx">
+          <option *ngFor="let lx of xmlxdict" [value]="lx">{{lx}}</option>
+        </select>
+      </div>
+      <div class="form-group col-xs-6">
+        <label for="pzdw">批准单位</label>
+        <select class="form-control" id="pzdw" formControlName="pzdw">
+          <option *ngFor="let dw of pzdwdict" [value]="dw">{{dw}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pfwh">批复文号</label>
+      <input type="text" class="form-control" id="pfwh" formControlName="pfwh" placeholder="XXXX[2018]号">
+    </div>
+
+    <div class="form-group">
+      <label for="pzrq">批准日期</label>
+      <input type="date" class="form-control" id="pzrq" formControlName="pzrq">
+    </div>
+
+    <div class="form-group">
+      <label for="zmj">总面积(公顷)</label>
+      <input type="text" pattern="[0-9]*.[0-9]*" class="form-control" id="zmj" formControlName="zmj">
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <label>宗地名称</label>
+      </div>
+      <div class="col-xs-5">
+        <label>宗地面积</label>
+      </div>
+      <div class="col-xs-1">
+        <label>
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </label>
+        <span class="glyphicon glyphicon-minus" aria-hidden="true" style="float: right;"></span>
+      </div>
+    </div>
+
+    <div *ngIf="zdExist.controls.length">
+      <div formArrayName="zdExist">
+        <div *ngFor="let zde of zdExist.controls; let i=index" [formGroupName]="i">
+          <div class="row">
+            <div class="col-xs-6">
+              <input type="text" class="form-control" formControlName="zdmc">
+            </div>
+            <div class="col-xs-5">
+              <input type="text" pattern="[0-9]*.[0-9]*" class="form-control" formControlName="zdmj">
+            </div>
+            <div class="col-xs-1">
+              <button class="btn btn-default btn-block" (click)="addField()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="zdAdd.controls.length">
+      <div formArrayName="zdAdd">
+        <div *ngFor="let zda of zdAdd.controls; let i=index" [formGroupName]="i">
+          <div class="row">
+            <div class="col-xs-6">
+              <input type="text" class="form-control" formControlName="zdmc">
+            </div>
+            <div class="col-xs-5">
+              <input type="text" class="form-control" pattern="[0-9]*.[0-9]*" class="form-control" formControlName="zdmj">
+            </div>
+            <div class="col-xs-1">
+              <button id="del" class="btn btn-default btn-block" (click)="delField(i)">
+                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+              </button>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6">
+        <button type="submit" class="btn btn-success" (click)="onSubmit()">保存</button>
+      </div>
+      <div class="col-xs-6">
+        <button style="float:right;" type="button" class="btn btn-success" (click)="nzyForm.reset()">重置</button>
+      </div>
+    </div>
+  </form>
+  <hr>
+  <p style="color: red">城市用地：2007年以后 84个重点城市规划建设区内，国务院批复的城镇用地。请84个重点城市注意。</p>
+</div>
